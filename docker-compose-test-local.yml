@@ -42,5 +42,5 @@ services:
     environment:
       - DURATION=1
 
-  db:
+  go-demo-db:
     image: mongo:3.2.10
