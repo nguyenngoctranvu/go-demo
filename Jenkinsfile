@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage("Unit") {
       steps {
-        git "https://github.com/vfarcic/go-demo.git"
+        git "https://github.com/nguyenngoctranvu/go-demo.git"
         // sh "docker-compose -f docker-compose-test.yml run --rm unit"
         sh "docker image build -t go-demo ."
       }
@@ -18,9 +18,7 @@ pipeline {
     }
     stage("Publish") {
       steps {
-        sh "docker tag go-demo localhost:5000/go-demo"
         sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-        sh "docker push localhost:5000/go-demo"
         sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
       }
     }
