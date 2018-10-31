@@ -59,7 +59,6 @@ pipeline {
       }
       steps {
         echo 'Productioning...'
-        sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
         script {
           try {
             sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
