@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  jenkins-agent:
+    image: localhost:5000/docker-jenkins-agent:3.9
+    environment:
+      - COMMAND_OPTIONS=-master http://192.168.99.100:8082/jenkins -username admin -password 123456a@ -labels 'docker' -executors 5
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: $HOME/.docker/machine/machines
+        target: /machines
+      - type: bind
+        source: /workspace
+        target: /workspace
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.env == jenkins-agent

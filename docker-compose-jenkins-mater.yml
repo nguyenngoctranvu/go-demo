@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  jenkins_master:
+    image: jenkins/jenkins:2.138.2-alpine
+    ports:
+      - 8082:8080
+      - 50000:50000
+    environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
+    volumes:
+      - type: bind
+        source: ./docker/jenkins
+        target: /var/jenkins_home
+    deploy:
+      resources:
+        reservations:
+          memory: 300M

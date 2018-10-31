@@ -1,0 +1,12 @@
+version: '3'
+services:
+  registry:
+    image: registry:2.5.0
+    ports:
+      - 5000:5000
+    volumes:
+      - ./docker/registry:/var/lib/registry
+    deploy:
+      resources:
+        reservations:
+          memory: 100m
