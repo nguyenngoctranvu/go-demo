@@ -61,10 +61,12 @@ pipeline {
         echo 'Productioning...'
         script {
           try {
+            sh "env"
             sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-            sh "docker-compose run --rm production"
+            // sh "docker-compose run --rm production"
           } catch (e) {
-            sh "docker service rollback go-demo_main"
+            // sh "docker service rollback go-demo_main"
+            echo "deploy production failed"
           }
         }
       }
