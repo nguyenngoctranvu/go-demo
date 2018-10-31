@@ -31,7 +31,7 @@ pipeline {
     stage('Prod-like') {
       environment {
         DOCKER_HOST = "tcp://${env.PROD_LIKE_IP}:2376"
-        DOCKER_MACHINE_NAME = "${env.PROD_LIKE_NAME}"
+        DOCKER_CERT_PATH = "/machines/${env.PROD_LIKE_NAME}"
         DOCKER_TLS_VERIFY = "1"
         HOST_IP = "localhost"
       }
