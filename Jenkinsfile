@@ -24,6 +24,8 @@ pipeline {
     stage('Publish') {
       steps {
         echo 'Publishing...'
+        sh "docker tag go-demo localhost:5000/go-demo:2.${BUILD_NUMBER}"
+        sh "docker push localhost:5000/go-demo:2.${BUILD_NUMBER}"
       }
     }
     stage('Prod-like') {
