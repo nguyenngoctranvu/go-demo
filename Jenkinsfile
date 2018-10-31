@@ -10,14 +10,15 @@ pipeline {
         sh "docker build -t go-demo ."
       }
     }
-    stage('Build') {
-      steps {
-        echo 'Building...'
-      }
-    }
     stage('Staging') {
+      environment {
+        COMPOSE_FILE = 'docker-compose-test-local.yml'
+        HOST_IP = 'localhost'
+      }
       steps {
         echo 'Staging...'
+        sh "docker-compose up -d staging-dep"
+        sh "docker-compose run --rm staging"
       }
     }
     stage('Publish') {
