@@ -39,12 +39,10 @@ pipeline {
       }
       steps {
         echo 'Prod-liking...'
-        sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
         script {
           try {
-            for (i =0; i< 3; i++) {
-              sh "docker-compose run --rm production"
-            }
+            sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
+            sh "docker-compose run --rm production"
           } catch (No) {
             sh "docker service rollback go-demo_main"
           }
@@ -64,10 +62,9 @@ pipeline {
         sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
         script {
           try {
-            for (i =0; i< 3; i++) {
-              sh "docker-compose run --rm production"
-            }
-          } catch (No) {
+            sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
+            sh "docker-compse run --rm production"
+          } catch (e) {
             sh "docker service rollback go-demo_main"
           }
         }
