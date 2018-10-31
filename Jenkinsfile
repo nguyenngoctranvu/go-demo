@@ -7,6 +7,7 @@ pipeline {
       steps {
         echo 'Uniting...'
         sh "docker-compose -f docker-compose-test.yml run --rm unit"
+        sh "docker build -t go-demo ."
       }
     }
     stage('Build') {
