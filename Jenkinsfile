@@ -26,6 +26,7 @@ pipeline {
         echo 'Publishing...'
         sh "docker tag go-demo localhost:5000/go-demo:2.${BUILD_NUMBER}"
         sh "docker push localhost:5000/go-demo:2.${BUILD_NUMBER}"
+        sh "docker rmi localhost:5000/go-demo:2.${BUILD_NUMBER}"
       }
     }
     stage('Prod-like') {
@@ -41,18 +42,35 @@ pipeline {
         sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
         script {
           try {
-            for (i =0; i< 10; i++) {
+            for (i =0; i< 3; i++) {
               sh "docker-compose run --rm production"
             }
-          } catch (e) {
+          } catch (No) {
             sh "docker service rollback go-demo_main"
           }
         }
       }
     }
     stage('Production') {
+      environment {
+        DOCKER_HOST = "tcp://${env.PROD_IP}:2376"
+        DOCKER_CERT_PATH = "/machines/${env.PROD_NAME}"
+        DOCKER_TLS_VERIFY = "1"
+        HOST_IP = "${env.PROD_IP}"
+        COMPOSE_FILE = 'docker-compose-test-local.yml'
+      }
       steps {
         echo 'Productioning...'
+        sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
+        script {
+          try {
+            for (i =0; i< 3; i++) {
+              sh "docker-compose run --rm production"
+            }
+          } catch (No) {
+            sh "docker service rollback go-demo_main"
+          }
+        }
       }
     }
   }
