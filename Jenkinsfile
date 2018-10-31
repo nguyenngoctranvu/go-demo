@@ -34,6 +34,7 @@ pipeline {
         DOCKER_CERT_PATH = "/machines/${env.PROD_LIKE_NAME}"
         DOCKER_TLS_VERIFY = "1"
         HOST_IP = "localhost"
+        COMPOSE_FILE = 'docker-compose-test-local.yml'
       }
       steps {
         echo 'Prod-liking...'
