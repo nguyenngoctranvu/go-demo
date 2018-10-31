@@ -54,7 +54,7 @@ pipeline {
         DOCKER_HOST = "tcp://${env.PROD_IP}:2376"
         DOCKER_CERT_PATH = "/machines/${env.PROD_NAME}"
         DOCKER_TLS_VERIFY = "1"
-        HOST_IP = "${env.PROD_IP}"
+        HOST_IP = "localhost"
         COMPOSE_FILE = 'docker-compose-test-local.yml'
       }
       steps {
