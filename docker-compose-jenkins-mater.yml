@@ -12,6 +12,9 @@ services:
         source: ./docker/jenkins
         target: /var/jenkins_home
     deploy:
+      placement:
+        constraints:
+          - node.labels.env == jenkins-master
       resources:
         reservations:
           memory: 300M

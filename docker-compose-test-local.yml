@@ -19,7 +19,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - go-demo-db
+      - db
 
   staging:
     extends:
@@ -42,5 +42,5 @@ services:
     environment:
       - DURATION=1
 
-  go-demo-db:
+  db:
     image: mongo:3.2.10
