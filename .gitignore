@@ -1,5 +1,8 @@
 /.idea
 /*.iml
 /go-demo
-/docker/registry/
+/docker
 /tmp
+/jenkins
+/docker-flow-proxy
+/docker-jenkins-slave-dind
