@@ -44,10 +44,10 @@ pipeline {
         script {
           try {
             sh "docker service update --image hub.fimplus.io/repo/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-            for (i=0; i<10 ; i++) {
+            for (i=0; i<3 ; i++) {
               sh "curl -I $HOST_IP/demo/hello"
             }
-          } catch (No) {
+          } catch (e) {
             sh "Deploy Prod-like failed"
           }
         }
@@ -55,9 +55,6 @@ pipeline {
     }
     stage('Production') {
       environment {
-        DOCKER_HOST = "tcp://${env.PROD_IP}:2376"
-        DOCKER_CERT_PATH = "/machines/${env.PROD_NAME}"
-        DOCKER_TLS_VERIFY = "1"
         HOST_IP = "localhost"
         COMPOSE_FILE = 'docker-compose-test-local.yml'
       }
@@ -65,9 +62,6 @@ pipeline {
         echo 'Productioning...'
         script {
           try {
-            sh "pwd"
-            sh "ls"
-            sh "env"
             sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
             // sh "docker-compose run --rm production"
           } catch (e) {
@@ -76,6 +70,11 @@ pipeline {
           }
         }
       }
+    }
+  }
+  post {
+    always {
+      sh "docker-compose -f docker-compose-test-local.yml down"
     }
   }
 }
