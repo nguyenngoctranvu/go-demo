@@ -25,7 +25,8 @@ pipeline {
     stage('Publish') {
       steps {
         echo 'Publishing...'
-        sh "docker tag go-demo localhost:5000/go-demo:2.${BUILD_NUMBER}"
+        sh "docker tag go-demo hub.fimplus.io/repo/go-demo:2.${BUILD_NUMBER}"
+        sh "docker login -u $USER -p $PASS hub.fimplus.io"
         sh "docker push localhost:5000/go-demo:2.${BUILD_NUMBER}"
         sh "docker rmi localhost:5000/go-demo:2.${BUILD_NUMBER}"
       }
