@@ -6,6 +6,7 @@ pipeline {
     stage('Unit') {
       steps {
         echo 'Uniting...'
+        sh "whoami"
         sh "docker-compose -f docker-compose-test.yml run --rm unit"
         sh "docker build -t go-demo ."
       }
