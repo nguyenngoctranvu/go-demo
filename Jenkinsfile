@@ -36,15 +36,17 @@ pipeline {
         // DOCKER_HOST = "tcp://${env.PROD_LIKE_IP}:2376"
         // DOCKER_CERT_PATH = "/machines/${env.PROD_LIKE_NAME}"
         // DOCKER_TLS_VERIFY = "1"
-        HOST_IP = "localhost"
-        COMPOSE_FILE = 'docker-compose-test-local.yml'
+        HOST_IP = "10.10.200.74"
+
       }
       steps {
         echo 'Prod-liking...'
         script {
           try {
             sh "docker service update --image hub.fimplus.io/repo/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-            sh "docker-compose run --rm production"
+            for (i=0; i<10 ; i++) {
+              sh "curl -I $HOST_IP/demo/hello"
+            }
           } catch (No) {
             sh "Deploy Prod-like failed"
           }
