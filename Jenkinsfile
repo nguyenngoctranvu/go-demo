@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    COMPOSE_FILE = docker-compose-test-local.yml
+    COMPOSE_FILE = 'docker-compose-test-local.yml'
   }
   stages {
     stage('Unit') {
