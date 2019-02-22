@@ -19,30 +19,20 @@ pipeline {
           } catch(e) {
             error "Staging failled"
           } finally {
-            sh 'docker-compose down'
+            sh "docker-compose down"
           }
         }
       }
     }
     stage('Publish') {
       steps {
-        sh 'echo Publish'
-      }
+        sh "docker tag go-demo localhost:5000/go-demo:${env.BUILD_NUMBER}"
+        sh "docker push go-demo localhost:5000/go-demo:${env.BUILD_NUMBER}"
     }
     stage('Prod-like') {
       steps {
-        sh 'echo Prod-like'
+        sh "docker service update --image localhost:5000/go-demo:${env.BUILD_NUMBER}"
       }
-    }
-    stage('Prod') {
-      steps {
-        sh "echo Prod"
-      }
-    }
-  }
-  post {
-    always {
-      sh 'docker-compose down'
     }
   }
 }
