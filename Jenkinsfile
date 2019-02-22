@@ -1,14 +1,13 @@
 pipeline {
   agent any
+  environment {
+    COMPOSE_FILE = docker-compose-test-local.yml
+  }
   stages {
-    stage('Pull') {
-      steps {
-        sh 'echo "Hello World"'
-      }
-    }
     stage('Unit') {
       steps {
-        sh 'echo Build'
+        sh 'docker-compose run --rm unit'
+        sh 'docker-compose build app'
       }
     }
     stage('Staging') {
