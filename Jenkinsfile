@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Prod-like') {
       steps {
-        sh "docker service update --image localhost:5000/go-demo:${env.BUILD_NUMBER}"
+        sh "docker service update --image localhost:5000/go-demo:${env.BUILD_NUMBER} go-demo_main"
       }
     }
   }
