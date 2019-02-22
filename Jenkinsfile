@@ -12,7 +12,16 @@ pipeline {
     }
     stage('Staging') {
       steps {
-        sh 'echo Staging'
+        script {
+          try {
+            sh 'docker-compose up -d staging-dep'
+            sh 'docker-compose run --rm staging'
+          } catch(e) {
+            error "Staging failled"
+          } finally {
+            sh 'docker-compose down'
+          }
+        }
       }
     }
     stage('Publish') {
@@ -31,5 +40,9 @@ pipeline {
       }
     }
   }
-
+  post {
+    always {
+      sh 'docker-compose down'
+    }
+  }
 }
