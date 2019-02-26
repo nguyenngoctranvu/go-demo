@@ -23,6 +23,7 @@ services:
     networks:
       - network1
 
+
     volumes:
       - type: bind
         source: /var/jenkins_home
