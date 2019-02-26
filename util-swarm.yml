@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  util:
+    image: alpine
+    networks:
+      - network1
+    command: sleep 1000000000
+    deploy:
+      mode: global
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+
+networks:
+  network1:
+    external: true

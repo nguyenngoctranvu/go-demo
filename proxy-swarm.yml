@@ -1,0 +1,36 @@
+version: "3.4"
+services:
+  proxy:
+    image: dockerflow/docker-flow-proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 8082:8080
+    networks:
+      - network1
+    environment:
+      - LISTENER_ADDRESS=swarm-listener
+      - MODE=swarm
+      - STATS_USER=admin
+      - STATS_PASS=123456
+      - STATS_UR=/stats
+    deploy:
+      replicas: 3
+
+  swarm-listener:
+    image: dockerflow/docker-flow-swarm-listener
+    networks:
+      - network1
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    environment:
+      - DF_NOTIFY_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure
+      - DF_NOTIFY_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove
+    deploy:
+      replicas: 3
+
+networks:
+  network1:
+    external: true

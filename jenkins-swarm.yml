@@ -1,0 +1,49 @@
+version: "3.2"
+services:
+  main:
+    image: jenkins/jenkins:2.164-alpine
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+        reservations:
+          memory: 300m
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/jenkins
+        - com.df.port=8080
+    ports:
+      - 50000:50000
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+    networks:
+      - network1
+
+    volumes:
+      - type: bind
+        source: /Users/vunv/go-demo/docker/jenkins
+        target: /var/jenkins_home
+
+  agent:
+    image: vfarcic/jenkins-swarm-agent
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /Users/vunv/.docker/machine/machines
+        target: /machines
+      - type: bind
+        source: /workspace
+        target: /workspace
+    environment:
+      - COMMAND_OPTIONS=-master http://192.168.99.100/jenkins -username admin -password 123456 -labels 'docker' -executors 5
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.env == jenkins-agent
+networks:
+  network1:
+    external: true

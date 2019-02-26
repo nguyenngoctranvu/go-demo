@@ -1,0 +1,29 @@
+version: '3.2'
+services:
+  main:
+    image: vfarcic/go-demo
+    environment:
+      - DB=db
+    networks:
+      - go-demo
+      - network1
+
+    deploy:
+      replicas: 3
+      labels:
+        - com.df.notify=true
+        - dom.df.distribute=true
+        - com.df.serviceDomain=go-demo.com
+        # - com.df.servicePath=/demo
+        - com.df.port=8080
+        - com.df.reqPathSearchReplace=/something/,/demo/
+  db:
+    image: mongo
+    networks:
+      - go-demo
+
+networks:
+  network1:
+    external: true
+  go-demo:
+    external: true
