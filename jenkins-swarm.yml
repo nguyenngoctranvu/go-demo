@@ -35,9 +35,6 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       - type: bind
-        source: /Users/vunv/.docker/machine/machines
-        target: /machines
-      - type: bind
         source: /workspace
         target: /workspace
     environment:
