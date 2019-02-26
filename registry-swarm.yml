@@ -9,6 +9,9 @@ services:
         source: $PWD
         target: /var/lib/registry
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       resources:
         reservations:
           memory: 100m
