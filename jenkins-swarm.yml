@@ -15,7 +15,7 @@ services:
         - com.df.port=8080
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.env == jenkins-master
     ports:
       - 50000:50000
     environment:
@@ -25,7 +25,7 @@ services:
 
     volumes:
       - type: bind
-        source: /Users/vunv/go-demo/docker/jenkins
+        source: /home
         target: /var/jenkins_home
 
   agent:
