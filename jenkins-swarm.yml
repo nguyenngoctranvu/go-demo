@@ -5,7 +5,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 300m
+          memory: 400m
         reservations:
           memory: 50m
       labels:
