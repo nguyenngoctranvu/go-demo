@@ -35,6 +35,11 @@ pipeline {
         sh "docker service update --image localhost:5000/go-demo:${env.BUILD_NUMBER} go-demo_main"
       }
     }
+    stage('Prod') {
+      steps {
+        input "Does the Prod-like look ok?"
+      }
+    }
   }
   post {
     always {
