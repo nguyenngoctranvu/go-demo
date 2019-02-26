@@ -25,7 +25,7 @@ services:
 
     volumes:
       - type: bind
-        source: /home
+        source: /var/jenkins_home
         target: /var/jenkins_home
 
   agent:
