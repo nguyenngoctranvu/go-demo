@@ -16,9 +16,9 @@ services:
       - STATS_UR=/stats
     deploy:
       replicas: 3
-      placement:
-        constraints:
-          - node.labels.env == proxy
+      # placement:
+      #   constraints:
+      #     - node.labels.env == proxy
 
   swarm-listener:
     image: dockerflow/docker-flow-swarm-listener
@@ -33,9 +33,9 @@ services:
       - DF_NOTIFY_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove
     deploy:
       replicas: 3
-      placement:
-        constraints:
-          - node.labels.env == proxy
+      # placement:
+      #   constraints:
+      #     - node.labels.env == proxy
 
 networks:
   network1:
