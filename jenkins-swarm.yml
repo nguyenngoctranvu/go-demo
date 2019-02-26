@@ -13,6 +13,9 @@ services:
         - com.df.distribute=true
         - com.df.servicePath=/jenkins
         - com.df.port=8080
+      placement:
+        constraints:
+          - node.role == manager
     ports:
       - 50000:50000
     environment:
