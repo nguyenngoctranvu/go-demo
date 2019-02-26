@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'docker'
+  }
   environment {
     COMPOSE_FILE = 'docker-compose-test-local.yml'
   }
