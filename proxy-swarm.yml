@@ -19,6 +19,9 @@ services:
       placement:
         constraints:
           - node.labels.env == worker
+        update_config:
+          parallelism: 1
+          delay: 10s
 
   swarm-listener:
     image: dockerflow/docker-flow-swarm-listener
