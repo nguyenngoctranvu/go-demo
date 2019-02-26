@@ -41,7 +41,7 @@ services:
         source: /workspace
         target: /workspace
     environment:
-      - COMMAND_OPTIONS=-master http://10.10.0.153/jenkins -username admin -password 123456 -labels 'docker' -executors 5
+      - COMMAND_OPTIONS=-master http://10.130.51.247/jenkins -username admin -password 123456 -labels 'docker' -executors 5
     deploy:
       mode: global
       placement:
