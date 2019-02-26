@@ -18,7 +18,7 @@ services:
       replicas: 3
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.env == worker
 
   swarm-listener:
     image: dockerflow/docker-flow-swarm-listener
@@ -35,7 +35,7 @@ services:
       replicas: 3
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.env == worker
 
 networks:
   network1:

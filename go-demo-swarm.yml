@@ -10,6 +10,9 @@ services:
 
     deploy:
       replicas: 3
+      placement:
+        constraints:
+          - node.labels.env == worker
       labels:
         - com.df.notify=true
         - dom.df.distribute=true
@@ -19,6 +22,10 @@ services:
         - com.df.reqPathSearchReplace=/something/,/demo/
   db:
     image: mongo
+    deploy:
+      placement:
+        constraints:
+          - node.labels.env == worker
     networks:
       - go-demo
 
