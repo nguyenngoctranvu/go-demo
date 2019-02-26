@@ -46,7 +46,7 @@ services:
       mode: global
       placement:
         constraints:
-          - node.labels.env == jenkins-agent
+          - node.labels.env1 == jenkins-agent
 networks:
   network1:
     external: true
