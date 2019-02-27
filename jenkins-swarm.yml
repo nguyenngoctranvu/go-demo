@@ -20,6 +20,8 @@ services:
       - 50000:50000
     environment:
       - JENKINS_OPTS=--prefix=/jenkins
+      - USER=admin
+      - PASSWORD=123456
     networks:
       - network1
 
@@ -39,7 +41,9 @@ services:
         source: /workspace
         target: /workspace
     environment:
-      - COMMAND_OPTIONS=-master http://10.130.51.247/jenkins -username admin -password 123456 -labels 'docker' -executors 5
+      - COMMAND_OPTIONS=-master http://10.130.129.237/jenkins -username $USER -password $PASS -labels 'docker' -executors 5
+      - USER=admin
+      - PASS=123456
     deploy:
       mode: global
       placement:
